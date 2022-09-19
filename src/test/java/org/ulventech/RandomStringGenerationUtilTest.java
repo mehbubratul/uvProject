@@ -1,6 +1,5 @@
 package org.ulventech;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -8,15 +7,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RandomStringGenerationUtilTest {
-
     private static final int STRING_LENGTH_FOR_EACH_LINE = 100;
-
-    @BeforeEach
-    void setUp() {
-        // given
-        // when
-        // then
-    }
 
     //region Test related to method "isInputValueValid"
     @Test

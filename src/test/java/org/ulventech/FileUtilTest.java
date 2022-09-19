@@ -12,7 +12,7 @@ class FileUtilTest {
         // given
         int number = 10;
         // when
-        boolean isDone = FileUtil.writeToFile(number, FileUtil.getOutFilePath());
+        boolean isDone = FileUtil.writeContentToFile(number, FileUtil.getOutFilePath());
         // then
         assertTrue(isDone);
     }
@@ -22,7 +22,7 @@ class FileUtilTest {
         // given
         int number = 0;
         // when
-        boolean isDone = FileUtil.writeToFile(number, FileUtil.getOutFilePath());
+        boolean isDone = FileUtil.writeContentToFile(number, FileUtil.getOutFilePath());
         // then
         assertFalse(isDone);
     }
@@ -32,7 +32,7 @@ class FileUtilTest {
         // given
         int number = 0;
         // when
-        boolean isDone = FileUtil.writeToFile(number, null);
+        boolean isDone = FileUtil.writeContentToFile(number, null);
         // then
         assertFalse(isDone);
     }

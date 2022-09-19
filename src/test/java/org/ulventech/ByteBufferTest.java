@@ -5,23 +5,9 @@ import org.junit.jupiter.api.Test;
 import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.Arrays;
 
 public class ByteBufferTest {
-    /*
-    Create a byte array and wrap it into a ByteBuffer.
-        The buffer’s capacity and limit will be the array’s length and its position will be zero.
-    Retrieve the bytes between the current position and the limit of the buffer.
-        The new byte array’s length is set to the number of remaining elements in the buffer,
-        using the remaining() API method and then the bytes are transfered from the buffer to the byte array,
-        using the get(byte[] dst, int offset, int length) API method.
-    Retrieve all bytes in the buffer.
-        First the buffer position is set to 0 and the buffer limit is set to its capacity,
-            with the clear() API method,
-            then the new byte array’s length is set to the buffer’s capacity and
-            then again the get(byte[] dst, int offset, int length) API method transfers bytes
-                from the buffer into the array.
-     */
+
     @Test
     void basics() {
         // Create a byte array
@@ -45,42 +31,91 @@ public class ByteBufferTest {
         buf.get(bytes, 0, bytes.length);
     }
 
-    /** target : 1073741823
+    /**
+     * target : 1073741823
      * inputNumber-bytes-megabytes-executionTime
      * 1073741823-26533952 Bytes-25 M - x 1417 ~ x mins
-     *
-     *
+     * 1073741823-72680016 Bytes-69 M - x 1309 ~
+     * ---------------------------
+     * numberOfLinesToBeWritten = 1073741823
+     * numberOfByteBufferIterationRequired = 1073741823 /2
+     * Used memory is bytes: 14154760
+     * Used memory is megabytes: 13
+     * Execution time in nanoseconds: 1559650931800
+     * Execution time in seconds: 1559
+     * ---------------------------
+     * <p>
+     * Used memory is bytes: 18188064
+     * Used memory is megabytes: 17
+     * Execution time in nanoseconds: 454120225200
+     * Execution time in seconds: 454
      */
     @Test
     void writeContentToFile() {
+
         PerformanceUtil.initializationOfPerformanceMeasurement();
-        int numberOfLinesToBeWritten = 1073741823; //1073741823
-        int numberOfByteBufferIterationRequired = numberOfLinesToBeWritten / 4;
+
+        int numberOfLinesToBeWritten = 1073741823; //agr
+
+        int numberOfIteration = 4;
+
+        int numberOfByteBufferIterationRequired = (numberOfLinesToBeWritten / numberOfIteration) + 1;
+
         boolean isDone = false;
+
+        int perByteArraySize = 102;
+
+        int byteBufferSize = perByteArraySize * numberOfIteration;
+
+        ByteBuffer buf = ByteBuffer.wrap(new byte[byteBufferSize]);
 
         byte[] tempBytes = RandomStringGenerationUtil.getInitialBytes();
 
         try (FileChannel outputChannel = new FileOutputStream(FileUtil.getOutFilePath()).getChannel()) {
 
             for (int i = 0; i < numberOfByteBufferIterationRequired; i++) {
-                ByteBuffer buffer = bytesArrayToByteBuffer(tempBytes);
-                buffer.flip();
-                outputChannel.write(buffer);
-                buffer.clear();
+
+                buf.clear();
+
+                for (int j = 0; j < numberOfIteration; j++) {
+
+                    tempBytes = RandomStringGenerationUtil.getConsecutiveBytes(tempBytes);
+
+                    if (buf.remaining() >= perByteArraySize) {
+                        buf.put(tempBytes);
+                        buf.put(new byte[]{'\r', '\n'});
+                    }
+
+                }
+
+                buf.flip();
+
+                outputChannel.write(buf);
+
             }
-
-
-            //isDone = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            //return isDone;
         }
+        buf.clear();
         PerformanceUtil.endMeasuringMemoryPerformance();
         PerformanceUtil.endMeasuringTimePerformance();
     }
 
+    @Deprecated
+    ByteBuffer bytesArrayToByteBuffer(byte[] tempBytes, ByteBuffer buf, int numberOfIteration, int perByteArraySize) {
+        for (int i = 0; i < numberOfIteration; i++) {
 
+            tempBytes = RandomStringGenerationUtil.getConsecutiveBytes(tempBytes);
+
+            if (buf.remaining() >= perByteArraySize) {
+                buf.put(tempBytes);
+                buf.put(new byte[]{'\r', '\n'});
+            }
+        }
+        return buf;
+    }
+
+    @Deprecated
     ByteBuffer bytesArrayToByteBuffer(byte[] tempBytes) {
         int perByteArraySize = 102;
         int numberOfIteration = 4;
@@ -89,12 +124,8 @@ public class ByteBufferTest {
 
         ByteBuffer buf = ByteBuffer.wrap(new byte[byteBufferSize]);
 
-        for (int i = 0; i < numberOfIteration; i++) {
 
-            if (i == 0) {
-                buf.clear();
-                buf.mark();
-            }
+        for (int i = 0; i < numberOfIteration; i++) {
 
             tempBytes = RandomStringGenerationUtil.getConsecutiveBytes(tempBytes);
 
@@ -103,16 +134,9 @@ public class ByteBufferTest {
                 buf.put(tempBytes);
                 buf.put(new byte[]{'\r', '\n'});
             } else {
-                // System.out.println("java.nio.BufferOverflowException");
-                //System.out.println("Original ByteBuffer:  " + Arrays.toString(buf.array()));
-                buf.reset();
-                //System.out.println("Original ByteBuffer:  " + Arrays.toString(buf.array()));
                 return buf;
             }
 
-            /*while (buf.hasRemaining()){
-                System.out.println(buf.position() + " -> " + buf.get());
-            }*/
         }
 
         // System.out.println("Capacity:" + buf.capacity() + " - Remaining:" + buf.remaining());

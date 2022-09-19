@@ -1,5 +1,4 @@
 package org.ulventech;
-
 public class StringUtil {
 
     public boolean isNullOrEmptyOrBlank(String str) {
