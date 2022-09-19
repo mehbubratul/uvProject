@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FileUtilTest {
+class FileServiceTest {
 
     //region valid test cases
     @Test
@@ -12,7 +12,7 @@ class FileUtilTest {
         // given
         int number = 10;
         // when
-        boolean isDone = FileUtil.writeContentToFile(number, FileUtil.getOutFilePath());
+        boolean isDone = FileService.writeContentToFile(number, FileService.getOutFilePath());
         // then
         assertTrue(isDone);
     }
@@ -22,7 +22,7 @@ class FileUtilTest {
         // given
         int number = 0;
         // when
-        boolean isDone = FileUtil.writeContentToFile(number, FileUtil.getOutFilePath());
+        boolean isDone = FileService.writeContentToFile(number, FileService.getOutFilePath());
         // then
         assertFalse(isDone);
     }
@@ -32,7 +32,7 @@ class FileUtilTest {
         // given
         int number = 0;
         // when
-        boolean isDone = FileUtil.writeContentToFile(number, null);
+        boolean isDone = FileService.writeContentToFile(number, null);
         // then
         assertFalse(isDone);
     }
@@ -40,7 +40,7 @@ class FileUtilTest {
     @Test
     void systemWillGenerateValidOutFilePath(){
         String expectedFilePath = "E:\\git\\uvProject\\src\\main\\resources\\uvTech.txt";
-        String actualFilePath = FileUtil.getOutFilePath();
+        String actualFilePath = FileService.getOutFilePath();
         assertEquals(expectedFilePath,actualFilePath);
     }
     //endregion

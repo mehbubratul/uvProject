@@ -2,7 +2,7 @@ package org.ulventech;
 
 import java.util.Scanner;
 
-public class ScanningUtil {
+public class ScanningService {
     public static String doScanningAndGetIntValue() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter a number: ");

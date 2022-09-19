@@ -8,17 +8,17 @@ public class UVTechApp {
 
     private static void performProcess() {
 
-        String inputValue = ScanningUtil.doScanningAndGetIntValue();
+        String inputValue = ScanningService.doScanningAndGetIntValue();
 
-        if (!RandomStringGenerationUtil.isInputValueValid(inputValue)) {
+        if (!RandomStringGenerationService.isInputValueValid(inputValue)) {
             return;
         }
 
         System.out.println("Please wait while the program is running... ");
 
-        String filePath = FileUtil.getOutFilePath();
+        String filePath = FileService.getOutFilePath();
 
-        FileUtil.writeContentToFile(Integer.parseInt(inputValue), filePath);
+        FileService.writeContentToFile(Integer.parseInt(inputValue), filePath);
 
         System.out.println("Writing to file is done in location : " + filePath);
     }

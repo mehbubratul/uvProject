@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Paths;
 
-public class FileUtil {
+public class FileService {
 
     public static String getOutFilePath() {
 
@@ -64,10 +64,11 @@ public class FileUtil {
         //endregion
 
         //region Create first Bytes Array
-        byte[] tempBytes = RandomStringGenerationUtil.getInitialBytes();
+        byte[] tempBytes = RandomStringGenerationService.getInitialBytes();
         //endregion
 
-        try (FileChannel outputChannel = new FileOutputStream(FileUtil.getOutFilePath()).getChannel()) {
+        //region String creation & Writing to file
+        try (FileChannel outputChannel = new FileOutputStream(FileService.getOutFilePath()).getChannel()) {
 
             for (int i = 0; i < numberOfByteBufferIterationRequired; i++) {
 
@@ -79,7 +80,7 @@ public class FileUtil {
                         numberOfIteration = remainder;
                     }
 
-                    tempBytes = RandomStringGenerationUtil.getConsecutiveBytes(tempBytes);
+                    tempBytes = RandomStringGenerationService.getConsecutiveBytes(tempBytes);
 
                     if (buf.remaining() >= perByteArraySize) {
                         buf.put(tempBytes);
@@ -101,6 +102,7 @@ public class FileUtil {
             System.out.println("Unable to write Content To File." + e.getMessage());
             return false;
         }
+        //endregion
 
         buf.clear();
 

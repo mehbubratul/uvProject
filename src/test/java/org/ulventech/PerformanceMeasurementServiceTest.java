@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PerformanceUtilTest {
+class PerformanceMeasurementServiceTest {
 
     private static final int MAX_INT_ACCEPTED_VALUE = (int) (Math.pow(2, 30) - 1);
 
@@ -17,11 +17,11 @@ class PerformanceUtilTest {
         long expectedMemoryInMegabytes = 10;
 
         // then
-        PerformanceUtil.initializationOfPerformanceMeasurement();
+        PerformanceMeasurementService.initializationOfPerformanceMeasurement();
 
-        FileUtil.writeContentToFile(inputNumber, FileUtil.getOutFilePath());
+        FileService.writeContentToFile(inputNumber, FileService.getOutFilePath());
 
-        long usedMemoryInMegabytes = PerformanceUtil.endMeasuringMemoryPerformance();
+        long usedMemoryInMegabytes = PerformanceMeasurementService.endMeasuringMemoryPerformance();
 
         assertTrue(expectedMemoryInMegabytes >= usedMemoryInMegabytes);
     }
@@ -35,11 +35,11 @@ class PerformanceUtilTest {
         // when
         long expectedTimeElapsedInSeconds = 60 * 25;
         // then
-        PerformanceUtil.initializationOfPerformanceMeasurement();
+        PerformanceMeasurementService.initializationOfPerformanceMeasurement();
 
-        FileUtil.writeContentToFile(inputNumber, FileUtil.getOutFilePath());
+        FileService.writeContentToFile(inputNumber, FileService.getOutFilePath());
 
-        long timeElapsedInSecond = PerformanceUtil.endMeasuringTimePerformance();
+        long timeElapsedInSecond = PerformanceMeasurementService.endMeasuringTimePerformance();
 
         assertTrue(timeElapsedInSecond <= expectedTimeElapsedInSeconds);
     }

@@ -1,6 +1,6 @@
 package org.ulventech;
 
-public class PerformanceUtil {
+public class PerformanceMeasurementService {
     private static Runtime runtime;
     private static long startTime;
     private static final long MEGABYTE = 1024L * 1024L;

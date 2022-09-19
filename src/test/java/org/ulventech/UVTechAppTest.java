@@ -13,7 +13,7 @@ class UVTechAppTest {
         // given
         int number = 10;
         // when
-        boolean isDone = FileUtil.writeContentToFile(number, FileUtil.getOutFilePath());
+        boolean isDone = FileService.writeContentToFile(number, FileService.getOutFilePath());
         // then
         assertTrue(isDone);
     }
@@ -23,7 +23,7 @@ class UVTechAppTest {
         // given
         int number = 0;
         // when
-        boolean isDone = FileUtil.writeContentToFile(number, FileUtil.getOutFilePath());
+        boolean isDone = FileService.writeContentToFile(number, FileService.getOutFilePath());
         // then
         assertFalse(isDone);
     }
@@ -33,7 +33,7 @@ class UVTechAppTest {
         // given
         int number = 0;
         // when
-        boolean isDone = FileUtil.writeContentToFile(number, null);
+        boolean isDone = FileService.writeContentToFile(number, null);
         // then
         assertFalse(isDone);
     }

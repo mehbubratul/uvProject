@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RandomStringGenerationUtilTest {
+class RandomStringGenerationServiceTest {
     private static final int STRING_LENGTH_FOR_EACH_LINE = 100;
 
     //region Test related to method "isInputValueValid"
@@ -15,7 +15,7 @@ class RandomStringGenerationUtilTest {
         // given
         String givenString = "";
         // when
-        boolean actualValue = RandomStringGenerationUtil.isInputValueValid(givenString);
+        boolean actualValue = RandomStringGenerationService.isInputValueValid(givenString);
         // then
         assertFalse(actualValue);
     }
@@ -25,7 +25,7 @@ class RandomStringGenerationUtilTest {
         // given
         String givenString = null;
         // when
-        boolean actualValue = RandomStringGenerationUtil.isInputValueValid(givenString);
+        boolean actualValue = RandomStringGenerationService.isInputValueValid(givenString);
         // then
         assertFalse(actualValue);
     }
@@ -35,7 +35,7 @@ class RandomStringGenerationUtilTest {
         // given
         String givenString = "abc";
         // when
-        boolean actualValue = RandomStringGenerationUtil.isInputValueValid(givenString);
+        boolean actualValue = RandomStringGenerationService.isInputValueValid(givenString);
         // then
         assertFalse(actualValue);
     }
@@ -45,7 +45,7 @@ class RandomStringGenerationUtilTest {
         // given
         String givenString = "2";
         // when
-        boolean actualValue = RandomStringGenerationUtil.isInputValueValid(givenString);
+        boolean actualValue = RandomStringGenerationService.isInputValueValid(givenString);
         // then
         assertTrue(actualValue);
     }
@@ -55,7 +55,7 @@ class RandomStringGenerationUtilTest {
         // given
         String givenString = "0";
         // when
-        boolean actualValue = RandomStringGenerationUtil.isInputValueValid(givenString);
+        boolean actualValue = RandomStringGenerationService.isInputValueValid(givenString);
         // then
         assertFalse(actualValue);
     }
@@ -65,7 +65,7 @@ class RandomStringGenerationUtilTest {
         // given
         String givenString = "1073741824";
         // when
-        boolean actualValue = RandomStringGenerationUtil.isInputValueValid(givenString);
+        boolean actualValue = RandomStringGenerationService.isInputValueValid(givenString);
         // then
         assertFalse(actualValue);
     }
@@ -75,7 +75,7 @@ class RandomStringGenerationUtilTest {
         // given
         String givenString = "1073741823";
         // when
-        boolean actualValue = RandomStringGenerationUtil.isInputValueValid(givenString);
+        boolean actualValue = RandomStringGenerationService.isInputValueValid(givenString);
         // then
         assertTrue(actualValue);
     }
@@ -85,7 +85,7 @@ class RandomStringGenerationUtilTest {
         // given
         String givenString = "1";
         // when
-        boolean actualValue = RandomStringGenerationUtil.isInputValueValid(givenString);
+        boolean actualValue = RandomStringGenerationService.isInputValueValid(givenString);
         // then
         assertTrue(actualValue);
     }
@@ -97,7 +97,7 @@ class RandomStringGenerationUtilTest {
         // given
         String expectedBytesInString = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         // when
-        byte[] actualBytes = RandomStringGenerationUtil.getInitialBytes();
+        byte[] actualBytes = RandomStringGenerationService.getInitialBytes();
         // then
         assertEquals(expectedBytesInString, new String(actualBytes));
     }
@@ -115,7 +115,7 @@ class RandomStringGenerationUtilTest {
         byte[] expectedBytes = expectedBytesInString.getBytes();
 
         // when
-        byte[] actualBytes = RandomStringGenerationUtil.getConsecutiveBytes(givenBytes);
+        byte[] actualBytes = RandomStringGenerationService.getConsecutiveBytes(givenBytes);
 
         // then
         assertTrue(Arrays.equals(expectedBytes, actualBytes));
@@ -132,7 +132,7 @@ class RandomStringGenerationUtilTest {
         byte[] expectedBytes = expectedBytesInString.getBytes();
 
         // when
-        byte[] actualBytes = RandomStringGenerationUtil.getConsecutiveBytes(givenBytes);
+        byte[] actualBytes = RandomStringGenerationService.getConsecutiveBytes(givenBytes);
         System.out.println(new String(actualBytes));
         // then
         assertTrue(Arrays.equals(expectedBytes, actualBytes));
@@ -148,7 +148,7 @@ class RandomStringGenerationUtilTest {
         int expectedBytesLength = STRING_LENGTH_FOR_EACH_LINE;
 
         // when
-        byte[] actualBytes = RandomStringGenerationUtil.getConsecutiveBytes(givenBytes);
+        byte[] actualBytes = RandomStringGenerationService.getConsecutiveBytes(givenBytes);
         int actualBytesLength = actualBytes.length;
 
         System.out.println(actualBytesLength);

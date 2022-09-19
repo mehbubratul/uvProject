@@ -2,7 +2,7 @@ package org.ulventech;
 
 import java.util.Arrays;
 
-public class RandomStringGenerationUtil {
+public class RandomStringGenerationService {
 
     //region private fields
     private static final int STRING_LENGTH_FOR_EACH_LINE = 100;
