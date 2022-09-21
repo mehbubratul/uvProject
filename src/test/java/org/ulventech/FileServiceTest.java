@@ -1,10 +1,17 @@
 package org.ulventech;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FileServiceTest {
+
+    @BeforeEach
+    void setUp(){
+    }
 
     //region valid test cases
     @Test
@@ -39,9 +46,14 @@ class FileServiceTest {
 
     @Test
     void systemWillGenerateValidOutFilePath(){
-        String expectedFilePath = "E:\\git\\uvProject\\src\\main\\resources\\uvTech.txt";
+
+        String expectedLocation = new StringBuilder(Paths.get("").toAbsolutePath().toString())
+                .append("\\src\\main\\resources\\")
+                .append("uvTech.txt")
+                .toString();
+
         String actualFilePath = FileService.getOutFilePath();
-        assertEquals(expectedFilePath,actualFilePath);
+        assertEquals(expectedLocation,actualFilePath);
     }
     //endregion
 }
